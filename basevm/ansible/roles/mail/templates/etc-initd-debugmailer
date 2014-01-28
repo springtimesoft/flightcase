@@ -1,0 +1,33 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          debugmailer
+# Required-Start:    $nullmailer
+# Required-Stop:     $nullmailer
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Debug smtp server
+# Description:       Debug smtp server
+### END INIT INFO
+
+# Author: springtimesoft <sysadmins@springtimesoft.com>
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="Debug smtp server"
+NAME=debugmailer
+SCRIPTNAME=/etc/init.d/$NAME
+
+. /lib/init/vars.sh
+
+. /lib/lsb/init-functions
+
+case $1 in
+     start)
+        su - vagrant -c "screen -S mail -dm sudo python -m smtpd -n -c DebuggingServer localhost:25"
+        log_end_msg 0
+        ;;
+     stop)
+        killall screen
+        log_end_msg 0
+        ;;
+esac
+exit 0

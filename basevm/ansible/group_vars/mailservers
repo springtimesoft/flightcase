@@ -1,0 +1,4 @@
+---
+# Mail server configuration
+mandrill_user: 
+mandrill_key: 

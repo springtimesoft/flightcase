@@ -1,0 +1,34 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: Update APT
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Install ntp 
+  apt: name=ntp state=present
+  tags: ntp
+
+- name: Configure ntp file
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  tags: ntp
+  notify: restart ntp
+
+- name: Start the ntp service
+  service: name=ntp state=started enabled=true
+  tags: ntp
+
+- name: Configure hosts file
+  template: src=etc_hosts dest=/etc/hosts
+
+- name: Configure hostname
+  template: src=etc_hostname dest=/etc/hostname
+  notify: set hostname
+
+- name: Install common utilities
+  action: apt name={{ item }} state=present
+  with_items:
+    - python-pycurl # Needed to install PPAs
+    - software-properties-common
+    - python-software-properties
+    - screen
+    - htop

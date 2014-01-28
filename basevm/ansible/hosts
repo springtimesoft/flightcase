@@ -1,0 +1,12 @@
+# Define host aliases here
+
+vm ansible_connection=ssh ansible_ssh_host=localhost
+
+[webservers]
+vm
+
+[dbservers]
+vm
+
+[mailservers]
+vm debugmailer=1

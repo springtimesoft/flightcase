@@ -1,0 +1,58 @@
+---
+# These tasks install http and the php modules.
+
+- name: Install nginx and php etc
+  apt: pkg={{ item }} state=latest
+  with_items:
+   - nginx
+   - php5-fpm
+   - php5-mysql
+   - php5-mcrypt
+   - php5-curl
+   - php5-intl
+   - php5-gd
+   - php5-cli
+   - php-apc
+   - git-core
+
+- name: Install Xdebug
+  apt: pkg=php5-xdebug state=latest
+  
+- name: Get Xdebug path
+  action: shell find /usr/lib/php5 -name xdebug.so 2>/dev/null
+  register: xdebug_path
+
+- name: Create Xdebug config
+  action: template src=etc-php5-confd-xdebug.ini dest=/etc/php5/conf.d/xdebug.ini
+  notify: 
+  - restart php
+
+- name: nginx service state
+  service: name=nginx state=started enabled=yes
+
+- name: Create nginx main configuration file
+  action: template src=etc-nginx-nginx.conf dest=/etc/nginx/nginx.conf
+  notify: 
+  - restart nginx
+
+- name: Create nginx fastcgi_params configuration file
+  action: template src=fastcgi_params dest=/etc/nginx/conf.d/fastcgi_params
+  notify: 
+  - restart nginx
+
+- name: Create nginx default virtualhost configuration file
+  action: template src=nginx.j2 dest=/etc/nginx/sites-available/default
+  notify: 
+  - restart nginx
+
+- name: Create php.ini file
+  action: template src=php.ini dest=/etc/php5/{{ item }}/php.ini
+  with_items:
+    - fpm
+    - cli
+  notify: 
+  - restart php
+
+# For Symfony
+#- name: Create parameters.yml
+#  action: shell cp parameters.yml.template parameters.yml chdir=/vagrant/app/config creates=parameters.yml

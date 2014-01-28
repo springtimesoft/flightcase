@@ -1,0 +1,5 @@
+{% if debugmailer is defined %}
+localhost
+{% else %}
+smtp.mandrillapp.com smtp --port=587 --starttls --user={{ mandrill_user }} --pass={{ mandrill_key }}
+{% endif %}

@@ -1,0 +1,29 @@
+---
+# Set up nullmailer and (maybe) a debug mail server
+
+- name: Add nullmailer PPA (for TLS support)
+  action: apt_repository repo=ppa:mikko-red-innovation/ppa
+
+- name: Install nullmailer
+  action: apt pkg=nullmailer state=latest update_cache=yes
+
+- name: Copy nullmailer remotes template
+  action: template src=etc-nullmailer-remotes dest=/etc/nullmailer/remotes
+  notify:
+    - restart nullmailer
+
+- name: Copy nullmailer adminaddr template
+  action: template src=etc-nullmailer-adminaddr dest=/etc/nullmailer/adminaddr
+  notify:
+    - restart nullmailer
+
+- name: Start and enable nullmailer
+  action: service name=nullmailer state=started enabled=yes
+
+- name: Set up debug mailer service file
+  action: template src=etc-initd-debugmailer dest=/etc/init.d/debugmailer mode=0755
+  when: debugmailer is defined
+
+- name: Start and enable debugmailer
+  action: service name=debugmailer state=started enabled=yes
+  when: debugmailer is defined

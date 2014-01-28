@@ -1,0 +1,26 @@
+---
+# Install project deps, this is quite a random example
+
+- name: Download and install Composer
+  action: get_url url=https://getcomposer.org/composer.phar dest=/usr/bin/composer mode=0755
+  tags: [ 'project-deps' ]
+
+- name: Install Node PPA
+  action: apt_repository repo=ppa:chris-lea/node.js
+  tags: [ 'project-deps' ]
+
+- name: Install NodeJS
+  action: apt pkg=nodejs state=latest update_cache=yes
+  tags: [ 'project-deps' ]
+  
+- name: Install Bower
+  action: npm name=bower global=yes
+  tags: [ 'project-deps' ]
+
+- name: Install Gulp
+  action: npm name=gulp version=~3.0.0 global=yes
+  tags: [ 'project-deps' ]
+
+- name: Install project dependencies from package.json
+  action: npm path=/vagrant
+  tags: [ 'project-deps' ]

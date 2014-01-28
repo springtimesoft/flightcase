@@ -1,0 +1,4 @@
+---
+# Web server variables
+httpd_port: 80
+webhost: ${ansible_hostname}
