@@ -3,20 +3,24 @@
 
 - name: apply common configuration to all nodes
   hosts: all
+  sudo: true
   roles:
     - common
 
 - name: configure and deploy the webservers and application code
   hosts: webservers
+  sudo: true
   roles:
     - web
 
 - name: deploy MySQL and configure the databases
   hosts: dbservers
+  sudo: true
   roles:
     - db
 
 - name: configure mailservers
   hosts: mailservers
+  sudo: true
   roles:
     - mail

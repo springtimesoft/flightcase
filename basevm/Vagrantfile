@@ -5,18 +5,19 @@ Vagrant.configure("2") do |config|
 
   # Autoconfigured network, with dev hostname
   #config.vm.network :private_network, ip: "0.0.0.0", auto_network: true
-  #config.vm.hostname = "basevm.dev"
+  config.vm.network :private_network, ip: "192.168.3.10", auto_network: true
+  config.vm.hostname = "basevm"
 
   # Share cache between VMs
   #config.cache.auto_detect
 
   # Allow running some helpful scripts via `vagrant exec`
-  #config.exec.folder = '/vagrant'
-  #config.exec.env['PATH'] = '$PATH:/vagrant/.vagrant/scripts'
+  config.exec.folder = '/vagrant'
+  config.exec.env['PATH'] = '$PATH:/vagrant/.vagrant/scripts'
 
   # Use NFS for synced_folder for extra speed
-  #config.vm.synced_folder ".", "/vagrant", :nfs => true
-  config.vm.synced_folder ".", "/vagrant"
+  config.vm.synced_folder ".", "/vagrant", :nfs => true
+  #config.vm.synced_folder ".", "/vagrant"
 
   config.vm.provider :virtualbox do |vb|
     # Add more memory to the base VM
@@ -24,10 +25,5 @@ Vagrant.configure("2") do |config|
   end
 
   # Provision with Ansible
-  #config.vm.provision :ansible do |ansible|
-  #  ansible.playbook = ".ansible/site.yml"
-  #  ansible.inventory_path = ".ansible/hosts"
-  #  ansible.limit = "vm" # Only provision VM machines
-  #  ansible.sudo = true
-  #end
+	config.vm.provision :shell, :path => 'provision.sh'
 end

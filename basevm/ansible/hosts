@@ -1,6 +1,6 @@
 # Define host aliases here
 
-vm ansible_connection=ssh ansible_ssh_host=localhost
+vm ansible_connection=local
 
 [webservers]
 vm
