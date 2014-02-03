@@ -2,33 +2,44 @@ server {
     listen         *:80;
     server_name    {{ webhost }};
 
-    root {{ app_root }}/web/;
-
+    root /vagrant/;
+	
+	autoindex on;
+	
     access_log  /var/log/nginx/{{ webhost }}.access.log;
     error_log  /var/log/nginx/{{ webhost }}.error.log;
 
-    location / {
-        try_files $uri @pass_to_symfony;
-    }
+    #location / {
+    #   try_files $uri @pass_to_symfony;
+    #}
 
-    location ~ /app_dev.php/ {
-        try_files $uri @pass_to_symfony_dev;
-    }
+    #location ~ /app_dev.php/ {
+    #    try_files $uri @pass_to_symfony_dev;
+    #}
 
-    location @pass_to_symfony{
-        rewrite ^ /app.php?$request_uri last;
-    }
+    #location @pass_to_symfony{
+    #    rewrite ^ /app.php?$request_uri last;
+    #}
 
-    location @pass_to_symfony_dev{
-        rewrite ^ /app_dev.php?$request_uri last;
-    }
+    #location @pass_to_symfony_dev{
+    #    rewrite ^ /app_dev.php?$request_uri last;
+    #}
 
+	
+
+    #location ~ ^/app_dev.php($|/) {
+    #        include fastcgi_params;
+    #        fastcgi_pass   unix:/var/run/php5-fpm.sock; # replace with your sock path
+    #}
+	
+	
     #location ~ ^/app(_dev)?\.php($|/) {
+	
     location ~ \.php {
         expires off;
         fastcgi_pass 127.0.0.1:9000;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param SYMFONY_ALLOW_DEV 1;
+        #fastcgi_param SYMFONY_ALLOW_DEV 1;
         fastcgi_buffer_size 64k;
         fastcgi_buffers 4 64k;
         include conf.d/fastcgi_params;
