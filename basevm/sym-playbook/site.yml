@@ -1,0 +1,9 @@
+---
+# This playbook deploys the whole application stack in this site.  
+
+- name: Install Symfony
+  hosts: Symfony
+  sudo: true
+  roles:
+    - Symfony
+

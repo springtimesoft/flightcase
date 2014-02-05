@@ -21,6 +21,6 @@
   action: npm name=gulp version=~3.0.0 global=yes
   tags: [ 'project-deps' ]
 
-- # name: Install project dependencies from package.json
+#-  name: Install project dependencies from package.json
   # action: npm path=/vagrant
   # tags: [ 'project-deps' ]

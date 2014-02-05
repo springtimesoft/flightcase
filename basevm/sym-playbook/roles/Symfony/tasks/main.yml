@@ -1,0 +1,20 @@
+---
+# This playbook installs Symfony
+
+- name: Update APT
+  apt: update_cache=yes cache_valid_time=3600
+  
+- name: Check wget
+  action: apt pkg=wget state=installed
+  
+- name: Ceck tar
+  action: apt pkg=tar state=installed
+  
+- name: Download Symfony 2.4.1 as *.zip
+  shell: wget -O symfony.tgz http://symfony.com/download?v=Symfony_Standard_Vendors_2.4.1.tgz
+
+- name: unpack Symfony into /vagrant/
+  shell: sudo tar xvzf symfony.tgz -C /vagrant
+  ignore_errors: True
+
+- include: install_httpd.yml
