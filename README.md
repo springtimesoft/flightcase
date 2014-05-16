@@ -12,6 +12,7 @@ VM Usage
 - create "web" folder inside project folder
 - put web stuff in "web" folder, check "web" folder into git
 - vagrant up
+- Open http://192.168.1.11
 
 Server Usage
 ---
