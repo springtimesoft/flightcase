@@ -11,11 +11,13 @@ VM Usage
 - copy into project folder
 - create "web" folder inside project folder
 - put web stuff in "web" folder, check "web" folder into git
+- vagrant up
 
 Server Usage
 ---
 
-- git clone this repo
+- apt-get install git-core
+- git clone https://github.com/springtimesoft/flightcase.git
 - run ./bootstrap.sh
 - run ./server.sh
 - git clone your "web" repo into /var/www/html
