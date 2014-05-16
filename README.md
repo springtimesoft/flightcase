@@ -17,6 +17,7 @@ VM Usage
 Server Usage
 ---
 
+- launch server and log in
 - apt-get install git-core
 - git clone https://github.com/springtimesoft/flightcase.git
 - run ./bootstrap.sh
@@ -26,5 +27,5 @@ Server Usage
 GitHub
 ---
 
-- Set up webhook pointing to http://server:9900/rapid?secret=changeme (see webhook/config.yml)
+- Set up webhook pointing to http://server:9900/rapid with content-type `application/x-www-form-urlencoded`
 
