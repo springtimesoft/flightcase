@@ -1,0 +1,13 @@
+---
+host: 0.0.0.0
+port: 9900
+secret: changeme
+
+projects:
+
+  rapid:
+    refs/heads/master:
+      - cd /var/www/html
+      - git pull
+      - sudo -u www-data php app/console doctrine:schema:update --force --env=prod
+      - sudo -u www-data php app/console cache:clear --env=prod
